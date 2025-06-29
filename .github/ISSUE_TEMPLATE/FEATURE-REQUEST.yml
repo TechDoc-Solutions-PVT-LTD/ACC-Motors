@@ -1,0 +1,100 @@
+name: "💡 Feature Request"
+description: Create a new ticket for a new feature request
+title: "💡 [FEATURE] - <title>"
+labels: ["feature", "enhancement", "help wanted"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "Provide a clear and concise description of the feature."
+      placeholder: "A dark mode feature for the UI that improves usability for users in low-light environments."
+    validations:
+      required: true
+
+  - type: textarea
+    id: ui_fields
+    attributes:
+      label: "UI Fields"
+      description: |
+        List all visible UI elements required for this feature. Example:
+        - **Field Name:** dark_mode_toggle
+          - **Type:** Toggle Switch
+          - **Label:** Enable Dark Mode
+          - **Validation:** Required
+        - **Field Name:** dark_mode_tooltip
+          - **Type:** Tooltip
+          - **Text:** "Switch to Dark Mode for better night-time usability."
+      placeholder: "e.g., toggle switches, buttons, labels."
+    validations:
+      required: true
+
+  - type: textarea
+    id: hidden_backend_fields
+    attributes:
+      label: "Hidden Backend Fields"
+      description: |
+        Include backend fields or settings for managing dark mode. Example:
+        - **Field Name:** theme_preference
+          - **Type:** Hidden
+          - **Value:** default = 'light'
+      placeholder: "List auto-generated values, flags, etc."
+    validations:
+      required: true
+
+  - type: textarea
+    id: other_requirements
+    attributes:
+      label: "Other Requirements"
+      description: |
+        Outline any functional or technical requirements. Example:
+        - **API Call:** POST /api/user-preferences/theme
+          - Payload: {"theme": "dark"}
+        - **Database Schema:** Add `theme_preference` column to `users` table.
+        - **Validation Rules:** Ensure only 'light' or 'dark' values are accepted.
+      placeholder: "e.g., API calls, validation rules, or dependencies."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: "Proposed Solution"
+      description: |
+        Describe how this feature could be implemented. Example:
+        Introduce a toggle switch in the user settings. Update CSS variables dynamically based on the theme preference (light or dark). Save user preferences in the backend.
+      placeholder: "Explain your solution with technical details."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives Considered"
+      description: |
+        Describe any alternative approaches considered and why they were not chosen. Example:
+        - Third-party browser extensions (not user-friendly).
+        - Hardcoded dark theme (no toggle option, less flexible).
+      placeholder: "List alternative solutions and their drawbacks."
+    validations:
+      required: true
+
+  - type: textarea
+    id: use_case
+    attributes:
+      label: "Use Case"
+      description: |
+        Provide a real-world scenario where this feature is useful. Example:
+        Users working late at night or in dim environments can reduce eye strain by using dark mode, improving their overall experience.
+      placeholder: "How will this feature benefit users?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: "Additional Context"
+      description: "Include screenshots, links, or other resources to clarify the request."
+      placeholder: "Attach designs or examples here."
+    validations:
+      required: false
