@@ -5,18 +5,20 @@ import InvoiceList from './pages/InvoiceList'
 import InventoryManagement from './pages/InventoryManagement'
 import AddInventory from './pages/AddInventory'
 import NotFound from './pages/common/NotFound'
+import { InvoiceManagementSystem } from './pages/InvoiceManagementSystem'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='*' element={<NotFound />} />
-        <Route path='/' element={<Dashboard />}>
+        {/* <Route path='/old' element={<Dashboard />}>
           <Route path='/' element={<InvoicePage />} />
           <Route path='/invoices' element={<InvoiceList />} />
           <Route path='/inventory' element={<InventoryManagement />} />
           <Route path='/inventory/add' element={<AddInventory />} />
-        </Route>
+        </Route> */}
+        <Route path='/' element={<InvoiceManagementSystem />} />
       </Routes>
     </BrowserRouter>
   )
