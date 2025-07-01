@@ -216,3 +216,28 @@ exports.createCompleteInvoice = async (req, res, next) => {
       next(error);
     }
   };
+
+  exports.getInvoiceById = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+  
+      const invoice = await Invoice.findById(id)
+        .populate('customer')
+        .populate({
+          path: 'service',
+          populate: {
+            path: 'sparePartsUsed.item',
+            model: 'Inventory'
+          }
+        });
+  
+      if (!invoice) {
+        throw new NotFoundError('Invoice not found');
+      }
+  
+      res.json(invoice);
+    } catch (error) {
+      next(error);
+    }
+  };
+  
