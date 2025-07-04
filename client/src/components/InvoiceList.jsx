@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Edit, Eye, Printer, ChevronLeft, ChevronRight, X } from 'lucide-react';
-
-// API Base URL
-const API_BASE = 'http://localhost:3001/api';
+import { API_BASE } from '../config/config';
 
 // Utility Functions
 const formatCurrency = (amount) => `Rs. ${amount?.toFixed(2) || '0.00'}`;
