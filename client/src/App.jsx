@@ -1,9 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Dashboard from './pages/Dashboard'
-import InvoicePage from './pages/InvoicePage'
-import InvoiceList from './pages/InvoiceList'
-import InventoryManagement from './pages/InventoryManagement'
-import AddInventory from './pages/AddInventory'
 import NotFound from './pages/common/NotFound'
 import { InvoiceManagementSystem } from './pages/InvoiceManagementSystem'
 
@@ -12,12 +7,6 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path='*' element={<NotFound />} />
-        {/* <Route path='/old' element={<Dashboard />}>
-          <Route path='/' element={<InvoicePage />} />
-          <Route path='/invoices' element={<InvoiceList />} />
-          <Route path='/inventory' element={<InventoryManagement />} />
-          <Route path='/inventory/add' element={<AddInventory />} />
-        </Route> */}
         <Route path='/' element={<InvoiceManagementSystem />} />
       </Routes>
     </BrowserRouter>
