@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
-import { Eye, FileText, Package } from 'lucide-react';
+import { Eye, FileText, Package, LogIn, LogOut } from 'lucide-react';
 import { CreateInvoice } from '../components/CreateInvoice';
 import { InvoiceList } from '../components/InvoiceList';
 import { InventoryManagement } from '../components/InventoryManagement';
+import { useAuth } from '../context/AuthContext';
+import { LoginPopup } from '../components/login/LoginPopup';
 
-// Main App Component
 export const InvoiceManagementSystem = () => {
   const [activeTab, setActiveTab] = useState('invoice');
+  const [showLogin, setShowLogin] = useState(false)
+  const { setIsAuthenticated, setIsAdmin, isAdmin } = useAuth()
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('isAdmin')
+    setIsAuthenticated(false)
+    setIsAdmin(false)
+  }
+
+ 
   return (
     <div className="flex flex-col w-full min-h-screen bg-gray-50">
       {/* Header */}
@@ -22,8 +33,8 @@ export const InvoiceManagementSystem = () => {
               <button
                 onClick={() => setActiveTab('invoice')}
                 className={`px-4 py-2 rounded-lg font-medium w-full md:w-auto  ${activeTab === 'invoice'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:text-blue-600'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-600 hover:text-blue-600'
                   }`}
               >
                 <FileText className="inline w-4 h-4 mr-2" />
@@ -32,8 +43,8 @@ export const InvoiceManagementSystem = () => {
               <button
                 onClick={() => setActiveTab('invoices')}
                 className={`px-4 py-2 rounded-lg font-medium w-full md:w-auto ${activeTab === 'invoices'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:text-blue-600'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-600 hover:text-blue-600'
                   }`}
               >
                 <Eye className="inline w-4 h-4 mr-2" />
@@ -42,18 +53,37 @@ export const InvoiceManagementSystem = () => {
               <button
                 onClick={() => setActiveTab('inventory')}
                 className={`px-4 py-2 rounded-lg font-medium w-full md:w-auto ${activeTab === 'inventory'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-600 hover:text-blue-600'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-600 hover:text-blue-600'
                   }`}
               >
                 <Package className="inline w-4 h-4 mr-2" />
                 Inventory
               </button>
+              {!isAdmin ?
+                (
+                  <button
+                    className={`px-4 py-2 rounded-lg font-medium w-full md:w-auto text-gray-600 hover:text-blue-600`}
+                    onClick={() => setShowLogin(true)}
+                  >
+                    <LogIn className="inline w-4 h-4 mr-2" />
+                    Login
+                  </button>
+                ) : (
+                  <button
+                    className={`px-4 py-2 rounded-lg font-medium w-full md:w-auto text-gray-600 hover:text-red-600`}
+                    onClick={handleLogout}            
+                  >
+                    <LogOut className="inline w-4 h-4 mr-2" />
+                    Logout
+                  </button>
+                )}
             </nav>
           </div>
         </div>
       </header>
 
+      {showLogin && <LoginPopup onClose={() => setShowLogin(false)} />}
       {/* Main Content */}
       <main className="flex-grow w-full max-w-screen-xl px-4 py-8 mx-auto sm:px-6 lg:px-8">
         {activeTab === 'invoice' && <CreateInvoice />}
