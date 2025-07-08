@@ -5,6 +5,7 @@ import { SaveInvoiceModal } from './invoice/SaveInvoiceModal';
 import { ServiceDetailsSection } from './invoice/ServiceDetailsSection';
 import { CustomerDetailsSection } from './invoice/CustomerDetailsSection';
 import { InvoiceHeader } from './invoice/InvoiceHeader';
+import { InvoicePDFGenerator } from '../utils/InvoicePDFGenerator';
 
 export const CreateInvoice = () => {
   const [invoiceData, setInvoiceData] = useState({
@@ -203,6 +204,8 @@ export const CreateInvoice = () => {
   const totalAmount = invoiceData.serviceDetails.serviceCost + partsTotal;
   const netAmount = totalAmount - invoiceData.discount;
 
+  const { generatePDF } = InvoicePDFGenerator({ invoice: invoiceData });
+
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
       <InvoiceHeader
@@ -249,89 +252,9 @@ export const CreateInvoice = () => {
           invoiceNumber={invoiceData.invoiceNumber}
           setShowSaveModal={setShowSaveModal}
           resetForm={resetForm}
-          generatePDF={() => generatePDF(invoiceData, partsTotal, totalAmount, netAmount)}
+          generatePDF={generatePDF}
         />
       )}
     </div>
   );
-};
-
-const generatePDF = (invoiceData, partsTotal, totalAmount, netAmount) => {
-  const printWindow = window.open('', '_blank');
-  const billContent = `
-    <html>
-      <head>
-        <title>Invoice ${invoiceData.invoiceNumber}</title>
-        <style>
-          body { font-family: monospace; font-size: 10px; width: 3in; margin: 0; padding: 10px; }
-          .header { text-align: center; border-bottom: 1px solid #000; padding-bottom: 10px; margin-bottom: 10px; }
-          .row { display: flex; justify-content: space-between; margin: 2px 0; }
-          .item { margin: 2px 0; }
-          .total { border-top: 1px solid #000; padding-top: 5px; margin-top: 10px; }
-          .footer { text-align: center; margin-top: 10px; border-top: 1px solid #000; padding-top: 10px; }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <strong>ACC MOTORS</strong><br>
-          Motorcycle Service Center<br>
-          No. 123, Main Street, Colombo 01<br>
-          Tel: +94 11 234 5678<br>
-          Email: info@accmotors.lk
-        </div>
-        
-        <div class="row">
-          <strong>Invoice: ${invoiceData.invoiceNumber}</strong>
-        </div>
-        <div class="row">
-          <span>Date: ${formatDate(new Date())}</span>
-        </div>
-        
-        <div style="margin: 10px 0;">
-          <strong>Customer Details:</strong><br>
-          Name: ${invoiceData.customerDetails.name}<br>
-          Vehicle: ${invoiceData.customerDetails.vehicleRegNo}<br>
-          Mobile: ${invoiceData.customerDetails.mobile}
-        </div>
-        
-        <div style="margin: 10px 0;">
-          <strong>Service Details:</strong><br>
-          KM: ${invoiceData.serviceDetails.km}<br>
-          Description: ${invoiceData.serviceDetails.description}
-        </div>
-        
-        <div class="total">
-          <div class="row">
-            <span>Service Cost:</span>
-            <span>${formatCurrency(invoiceData.serviceDetails.serviceCost)}</span>
-          </div>
-          <div class="row">
-            <span>Parts Total:</span>
-            <span>${formatCurrency(partsTotal)}</span>
-          </div>
-          <div class="row">
-            <span>Total:</span>
-            <span>${formatCurrency(totalAmount)}</span>
-          </div>
-          <div class="row">
-            <span>Discount:</span>
-            <span>${formatCurrency(invoiceData.discount)}</span>
-          </div>
-          <div class="row">
-            <strong>Net Amount:</strong>
-            <strong>${formatCurrency(netAmount)}</strong>
-          </div>
-        </div>
-        
-        <div class="footer">
-          Thank you for your business!<br>
-          Please visit again
-        </div>
-      </body>
-    </html>
-  `;
-  
-  printWindow.document.write(billContent);
-  printWindow.document.close();
-  printWindow.print();
 };

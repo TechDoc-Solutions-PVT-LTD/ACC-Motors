@@ -2,8 +2,18 @@ import React from 'react';
 import { Save } from 'lucide-react';
 
 export const AddItemModal = ({ newItem, setNewItem, setShowAddModal, handleAddItem }) => {
+  const handleOverlayClick = (e) => {
+    // Close modal only if the click is on the overlay, not the modal content
+    if (e.target === e.currentTarget) {
+      setShowAddModal(false);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      onClick={handleOverlayClick}
+    >
       <div className="w-full max-w-md p-6 mx-4 bg-white rounded-lg">
         <h3 className="mb-4 text-lg font-semibold">Add New Inventory Item</h3>
 
