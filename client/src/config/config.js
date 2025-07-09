@@ -1,1 +1,1 @@
-export const API_BASE = 'https://aac-motors-backend.vercel.app/api'
+export const API_BASE = import.meta.env.VITE_API_URL;
