@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 
 export const LoginPopup = ({ onClose }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('admin')
+  const [password, setPassword] = useState('admin123')
   const { setIsAuthenticated, setIsAdmin } = useAuth()
   const modalRef = useRef(null)
 
